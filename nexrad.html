@@ -4,6 +4,31 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="leaflet.css">
 	<link rel="stylesheet" href="leaflet.label.css" />
+	<style type="text/css">
+            #map {
+                width: 600px;
+                height: 400px;
+                margin: 0 0 1em 0;
+                margin-right:auto;
+                margin-left:auto;
+            }
+
+            .distPoly {
+              opacity:1;
+              fill:purple;
+            }
+            .leaflet-label {
+              background:none;
+               left: -22px;
+              border:none;
+              background-clip:none;
+            }
+            .leaflet-label:before {
+	border-right: 0px solid black;
+	border-right-color: inherit;
+	left: -10px;
+}
+        </style>
 </head>
 <body>
 	<div id="map" style="width: 1280px; height: 850px"></div>

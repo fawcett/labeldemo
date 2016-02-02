@@ -1,0 +1,65 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>Leaflet NEXRAD</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="leaflet.css">
+	<link rel="stylesheet" href="leaflet.label.css" />
+</head>
+<body>
+	<div id="map" style="width: 1280px; height: 850px"></div>
+	<script src="leaflet_002.js"></script>
+        <script src="leaflet.js"></script>
+				<script src="leaflet.label.js"></script>
+	<script>
+		var myStyle = {
+        	"color": "#70706f",
+        	"weight": 1,
+        	"opacity": 0.95
+    		};
+
+		var cityMarker = {
+		radius: 2.5,
+		fillColor: "#ff7800",
+		color: "#000",
+		weight: 1,
+		opacity: 1,
+		fillOpacity: 1
+		};
+
+		var mapOptions = {
+			center: new L.LatLng(40.606, -115.332),
+			zoom: 6,
+			crs: L.CRS.EPSG4326,
+			attributionControl: false,
+    		};
+		var map = L.map('map', mapOptions);
+
+
+                var hillshade = 'clipped_hillshade.gif',
+                imageBounds = [[15.32500016665, -140.0], [56.99166666665, -60.0]];
+                L.imageOverlay(hillshade, imageBounds).addTo(map);
+
+
+		var radar = 'latest_radaronly.gif',
+    		imageBounds = [[21.6435524102082885, -127.6293611764705755], [50.3976407147058885, -66.5269235294131755]];
+		L.imageOverlay(radar, imageBounds).addTo(map);
+
+
+		var adminLines = new L.GeoJSON.AJAX("./vectors/admin_lines.geojson",{style:myStyle});
+		adminLines.addTo(map);
+
+
+		var cities = new L.GeoJSON.AJAX("./vectors/cut_cities.geojson",
+                                               {pointToLayer: function (feature, latlng) {
+                                     return L.circleMarker(latlng, cityMarker).bindLabel(feature.properties.EN_US, {noHide:true});
+    		}});
+
+
+		cities.addTo(map);
+
+		map.on('click', onMapClick);
+	</script>
+
+
+
+</body></html>
